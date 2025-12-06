@@ -2,7 +2,6 @@ package ru.yandex.practicum;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.*;
 
 /*
@@ -35,10 +34,10 @@ public class WordleGame {
     private Map<Integer, Character> solution = new HashMap<>();
 
     public WordleGame(WordleDictionary dictionary, PrintWriter errorLog) {
-        this.errorLog=errorLog;
-        this.dictionary=dictionary;
-        int choice=rand.nextInt(dictionary.getWords().size());
-        answer=dictionary.getWord(choice);
+        this.errorLog = errorLog;
+        this.dictionary = dictionary;
+        int choice = rand.nextInt(dictionary.getWords().size());
+        answer = dictionary.getWord(choice);
     }
 
 
@@ -46,29 +45,30 @@ public class WordleGame {
         steps++;
         useWords.add(str);
         String timeStr = "";
-        HashMap<Character, Integer> book=new HashMap<>();
+        HashMap<Character, Integer> book = new HashMap<>();
         for (int i = 0; i < str.length(); i++) {
-            book.put(answer.charAt(i),book.getOrDefault(answer.charAt(i),0)+1);
+            book.put(answer.charAt(i), book.getOrDefault(answer.charAt(i), 0) + 1);
         }
 
         for (int i = 0; i < str.length(); i++) {
             if (answer.charAt(i) == str.charAt(i)) {
-                timeStr+=("+");
-                book.put(str.charAt(i),book.get(str.charAt(i))-1);
+                timeStr += ("+");
+                book.put(str.charAt(i), book.get(str.charAt(i)) - 1);
                 if (solution.get(i) == null) {
                     solution.put(i, str.charAt(i));
                 }
             } else {
-                if (book.getOrDefault(str.charAt(i),0)>0) {
-                    timeStr+=("^");
-                    book.put(str.charAt(i),book.get(str.charAt(i))-1);
+                if (book.getOrDefault(str.charAt(i), 0) > 0) {
+                    timeStr += ("^");
+                    book.put(str.charAt(i), book.get(str.charAt(i)) - 1);
                 } else {
-                    timeStr+=("-");
+                    timeStr += ("-");
                 }
             }
         }
         return timeStr.toString();
     }
+
     public String getAnswer() {
         return answer;
     }

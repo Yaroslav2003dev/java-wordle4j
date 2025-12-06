@@ -20,21 +20,20 @@ public class WordleDictionaryLoader {
     }
 
     public WordleDictionary loadText() throws IOException {
-       try (FileReader reader = new FileReader("words_ru.txt")) {
-           BufferedReader br = new BufferedReader(reader);
-           while (br.ready()) {
-               textList.add(br.readLine());
-           }
-           br.close();
-       } catch (FileNotFoundException e) {
-           errorLog.println("Файл не найден");
-       } catch (IOException e) {
-           errorLog.println("Произошла ошибка во время чтения файла");
-       }
+        try (FileReader reader = new FileReader("words_ru.txt")) {
+            BufferedReader br = new BufferedReader(reader);
+            while (br.ready()) {
+                textList.add(br.readLine());
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
+            errorLog.println("Файл не найден");
+        } catch (IOException e) {
+            errorLog.println("Произошла ошибка во время чтения файла");
+        }
 
-       return new WordleDictionary(textList, errorLog);
-   }
-
+        return new WordleDictionary(textList, errorLog);
+    }
 
 
 }

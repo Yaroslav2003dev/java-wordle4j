@@ -17,17 +17,17 @@ class WordleTest {
     @DisplayName("Получение результата сравнения введённого слова, отсутсвующего в словаре, с загаданным словом")
     void testLetterComparison_WhenWordIsMissingFromDictionary_False() throws IOException {
         //given
-            PrintWriter errorLog = new PrintWriter(new FileWriter(Paths.get(HOME, "error.log").toFile()));
-            WordleDictionaryLoader text = new WordleDictionaryLoader(errorLog);
-            WordleDictionary listWords = text.loadText();
-            WordleGame wordleGame = new WordleGame(listWords, errorLog);
-            String word = "тигры";
-            String output;
-            //when
-            output = wordleGame.letterComparison(word);
-            //then
-            Assertions.assertFalse(output.equals("+++++"),"Слова нет в словаре, поэтому ожидается False");
-        }
+        PrintWriter errorLog = new PrintWriter(new FileWriter(Paths.get(HOME, "error.log").toFile()));
+        WordleDictionaryLoader text = new WordleDictionaryLoader(errorLog);
+        WordleDictionary listWords = text.loadText();
+        WordleGame wordleGame = new WordleGame(listWords, errorLog);
+        String word = "тигры";
+        String output;
+        //when
+        output = wordleGame.letterComparison(word);
+        //then
+        Assertions.assertFalse(output.equals("+++++"), "Слова нет в словаре, поэтому ожидается False");
+    }
 
     @Test
     @DisplayName("Получение результата сравнения загаданного слова с загаданным словом")
@@ -42,26 +42,26 @@ class WordleTest {
         //when
         output = wordleGame.letterComparison(word);
         //then
-        Assertions.assertTrue(output.equals("+++++"),"Загаданное слово сравнивается с самим собой, поэтому ожидается True");
+        Assertions.assertTrue(output.equals("+++++"), "Загаданное слово сравнивается с самим собой, поэтому ожидается True");
     }
 
-        @Test
-        @DisplayName("Отгадывание слова за счёт подсказки")
-        void testSearchWord_DeterminingFinalLetterWordUsingHelp_True () throws IOException {
-            //given
-            PrintWriter errorLog = new PrintWriter(new FileWriter(Paths.get(HOME, "error.log").toFile()));
-            WordleDictionaryLoader text = new WordleDictionaryLoader(errorLog);
-            WordleDictionary listWords = text.loadText();
-            WordleGame wordleGame = new WordleGame(listWords, errorLog);
-            StringBuilder word1 = new StringBuilder(wordleGame.getAnswer());
-            String word2= String.valueOf(word1.delete(3,5));
-            String help="";
-            //when
-            wordleGame.letterComparison(word2);
-            while (!help.equals(wordleGame.getAnswer())){
-                help = wordleGame.searchWord();
-            }
-            //then
-            Assertions.assertTrue(help.equals(wordleGame.getAnswer()),"По подсказке получится отгадать слово, ожидается True");
+    @Test
+    @DisplayName("Отгадывание слова за счёт подсказки")
+    void testSearchWord_DeterminingFinalLetterWordUsingHelp_True() throws IOException {
+        //given
+        PrintWriter errorLog = new PrintWriter(new FileWriter(Paths.get(HOME, "error.log").toFile()));
+        WordleDictionaryLoader text = new WordleDictionaryLoader(errorLog);
+        WordleDictionary listWords = text.loadText();
+        WordleGame wordleGame = new WordleGame(listWords, errorLog);
+        StringBuilder word1 = new StringBuilder(wordleGame.getAnswer());
+        String word2 = String.valueOf(word1.delete(3, 5));
+        String help = "";
+        //when
+        wordleGame.letterComparison(word2);
+        while (!help.equals(wordleGame.getAnswer())) {
+            help = wordleGame.searchWord();
         }
+        //then
+        Assertions.assertTrue(help.equals(wordleGame.getAnswer()), "По подсказке получится отгадать слово, ожидается True");
     }
+}

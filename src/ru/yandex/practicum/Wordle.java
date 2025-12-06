@@ -3,7 +3,6 @@ package ru.yandex.practicum;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
@@ -71,7 +70,7 @@ public class Wordle {
 
                 if (word.equals("")) {
                     help = wordleGame.searchWord();
-                    System.out.println("Подсказка от компьютера: "+help);
+                    System.out.println("Подсказка от компьютера: " + help);
                 } else {
                     output = wordleGame.letterComparison(word);
                     if (output.equals("+++++")) {

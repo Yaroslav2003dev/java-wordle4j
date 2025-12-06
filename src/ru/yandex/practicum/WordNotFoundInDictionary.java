@@ -7,5 +7,4 @@ public class WordNotFoundInDictionary extends RuntimeException {
     }
 
 
-
 }
