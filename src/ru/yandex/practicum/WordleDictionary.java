@@ -39,9 +39,7 @@ public class WordleDictionary {
         List<String> normWords = new ArrayList<>();
         for (String word : words) {
             if (word.length() == 5) {
-                word.replace('ё', 'е');
-                word.toLowerCase();
-                normWords.add(word);
+                normWords.add(word.replace('ё', 'е').toLowerCase());
             }
         }
         words = normWords;

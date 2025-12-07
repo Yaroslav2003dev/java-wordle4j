@@ -39,31 +39,33 @@ public class Wordle {
                 isNotCorrectInput = TRUE;
                 while (isNotCorrectInput) {
                     System.out.println("Введите слово");
-                    word = input.nextLine();
+                    word = input.nextLine().replace('ё', 'е').toLowerCase();
                     errorLog.println("Пользователь ввёл: " + word);
                     errorLog.flush();
-                    word.replace('ё', 'е');
-                    word.toLowerCase();
 
                     if (!word.isEmpty() && word.trim().isEmpty()) {
-                        throw new SpacesInWord("Вы ввели пробел. В слове этот символ должен отсутствовать");
+                        System.out.println("Вы ввели пробел. В слове этот символ должен отсутствовать");
+                        continue;
+                    }
+
+                    if (!word.equals("") && !word.matches("^[А-Яа-я\\s]+$")) {
+                        System.out.println("Ошибка ввода. Введите слово, используя только русские буквы");
+                        errorLog.println("Ошибка ввода. Введите слово, используя только русские буквы");
+                        errorLog.flush();
+                        continue;
+                    }
+                    if (!word.equals("") && !listWords.isWordFromListWords(word)) {
+                        System.out.println("Ошибка ввода. Введённого слова нет в словаре");
+                        errorLog.println("Ошибка ввода. Введённого слова нет в словаре");
+                        errorLog.flush();
+                        continue;
                     }
                     if ((word.length() == 5) || word.equals("")) {
                         isNotCorrectInput = FALSE;
                     } else {
+                        System.out.println("Ошибка ввода. Длина слова должна быть 5 символов. Вы ввели слово с длиной - " + word.length());
                         errorLog.println("Ошибка ввода. Длина слова должна быть 5 символов. Вы ввели слово с длиной - " + word.length());
                         errorLog.flush();
-                        throw new WordDoesnNotFitTheLength("Ошибка ввода. Длина слова должна быть 5 символов. Вы ввели слово с длиной - ", word.length());
-                    }
-                    if (!word.equals("") && !word.matches("^[А-Яа-я\\s]+$")) {
-                        errorLog.println("Ошибка ввода. Введите слово, используя только русские буквы");
-                        errorLog.flush();
-                        throw new WordIsMisspelled("Ошибка ввода. Введите слово, используя только русские буквы");
-                    }
-                    if (!word.equals("") && !listWords.isWordFromListWords(word)) {
-                        errorLog.println("Ошибка ввода. Введённого слова нет в словаре");
-                        errorLog.flush();
-                        throw new WordNotFoundInDictionary("Ошибка ввода. Введённого слова нет в словаре");
                     }
 
                 }
@@ -91,10 +93,6 @@ public class Wordle {
             System.out.println("Игра завершена поражением :(");
             errorLog.println("Игра завершена поражением");
             errorLog.flush();
-        } catch (WordNotFoundInDictionary | WordIsMisspelled | SpacesInWord ex) {
-            System.out.println(ex.getMessage());
-        } catch (WordDoesnNotFitTheLength ex) {
-            System.out.println(ex.getDetailMessage());
         } catch (IOException ex) {
             System.out.println("Игра завершилась ошибкой");
             ex.printStackTrace();
