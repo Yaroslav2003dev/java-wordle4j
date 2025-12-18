@@ -1,5 +1,8 @@
 package ru.yandex.practicum;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -10,5 +13,39 @@ import java.util.List;
 public class WordleDictionary {
 
     private List<String> words;
+    private PrintWriter errorLog;
+
+    public WordleDictionary(List<String> words, PrintWriter errorLog) throws IOException {
+        this.errorLog = errorLog;
+        this.words = words;
+        errorLog.println("Загружен словарь");
+        errorLog.flush();
+        normalizationDictionary();
+    }
+
+    public List<String> getWords() {
+        return words;
+    }
+
+    public String getWord(int i) {
+        return words.get(i);
+    }
+
+    public boolean isWordFromListWords(String word) {
+        return words.contains(word);
+    }
+
+    public void normalizationDictionary() throws IOException {
+        List<String> normWords = new ArrayList<>();
+        for (String word : words) {
+            if (word.length() == 5) {
+                normWords.add(word.replace('ё', 'е').toLowerCase());
+            }
+        }
+        words = normWords;
+        errorLog.println("Произведена нормализация словаря");
+        errorLog.flush();
+    }
+
 
 }
